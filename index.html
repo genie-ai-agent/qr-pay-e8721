@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>QR Pay — Charge a customer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="shell">
+    <header class="hdr">
+      <div class="brand">
+        <span class="dot"></span>
+        <span class="brand-name">QR&middot;PAY</span>
+      </div>
+      <a class="settings-link" href="#settings" id="openSettings">settings</a>
+    </header>
+
+    <section class="panel">
+      <div class="panel-label">// charge</div>
+      <form id="chargeForm" autocomplete="off">
+        <label class="field">
+          <span class="field-label">amount</span>
+          <div class="amount-row">
+            <span class="currency">$</span>
+            <input id="amount" type="text" inputmode="decimal" placeholder="0.00" required />
+          </div>
+        </label>
+
+        <label class="field">
+          <span class="field-label">note <span class="hint">what's it for?</span></span>
+          <div class="note-row">
+            <input id="note" type="text" placeholder="iced latte" />
+            <button type="button" id="micBtn" class="mic" aria-label="speak note" title="speak note">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+            </button>
+          </div>
+          <span class="mic-status" id="micStatus"></span>
+        </label>
+
+        <button type="submit" class="btn-primary">generate qr →</button>
+      </form>
+    </section>
+
+    <section class="panel qr-panel hidden" id="qrPanel">
+      <div class="panel-label">// scan to pay</div>
+      <div class="qr-amount" id="qrAmount"></div>
+      <div class="qr-note" id="qrNote"></div>
+      <div class="qr-box">
+        <div id="qrCanvas"></div>
+      </div>
+      <div class="url-row">
+        <code id="payUrl"></code>
+      </div>
+      <div class="actions">
+        <button type="button" id="copyBtn" class="btn-ghost">copy link</button>
+        <button type="button" id="downloadBtn" class="btn-ghost">download qr</button>
+        <a id="openBtn" class="btn-ghost" target="_blank" rel="noopener">open</a>
+      </div>
+    </section>
+
+    <section class="panel settings" id="settings">
+      <div class="panel-label">// settings — saved on this device</div>
+      <label class="field">
+        <span class="field-label">venmo handle <span class="hint">without the @</span></span>
+        <input id="venmoHandle" type="text" placeholder="iqram" />
+      </label>
+      <label class="field">
+        <span class="field-label">jelly username</span>
+        <input id="jellyHandle" type="text" placeholder="iqram" />
+      </label>
+      <label class="field">
+        <span class="field-label">stripe payment link <span class="hint">paste a stripe.com link; static sites can't create dynamic amounts</span></span>
+        <input id="stripeLink" type="url" placeholder="https://buy.stripe.com/..." />
+      </label>
+      <button type="button" id="saveSettings" class="btn-primary">save</button>
+      <div class="save-status" id="saveStatus"></div>
+    </section>
+
+    <footer class="ftr">
+      <span>QR&middot;PAY // venmo · jelly · stripe</span>
+    </footer>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

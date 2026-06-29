@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pay</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="pay-body">
+  <main class="shell pay-shell">
+    <header class="hdr">
+      <div class="brand">
+        <span class="dot"></span>
+        <span class="brand-name">QR&middot;PAY</span>
+      </div>
+    </header>
+
+    <section class="pay-card">
+      <div class="panel-label">// amount due</div>
+      <div class="pay-amount" id="payAmount">$0.00</div>
+      <div class="pay-note" id="payNote"></div>
+      <div class="pay-merchant" id="payMerchant"></div>
+
+      <div class="pay-methods">
+        <a id="venmoBtn" class="pay-btn venmo" target="_blank" rel="noopener">
+          <span class="pay-btn-label">Pay with Venmo</span>
+          <span class="pay-btn-sub" id="venmoSub">@handle</span>
+        </a>
+        <a id="jellyBtn" class="pay-btn jelly" target="_blank" rel="noopener">
+          <span class="pay-btn-label">Pay with Jelly</span>
+          <span class="pay-btn-sub" id="jellySub">@handle</span>
+        </a>
+        <a id="stripeBtn" class="pay-btn stripe" target="_blank" rel="noopener">
+          <span class="pay-btn-label">Card / Apple Pay</span>
+          <span class="pay-btn-sub">via Stripe</span>
+        </a>
+      </div>
+
+      <p class="pay-foot">Tap a method. Venmo &amp; Jelly open in their apps on mobile.</p>
+    </section>
+  </main>
+
+  <script src="pay.js"></script>
+</body>
+</html>
