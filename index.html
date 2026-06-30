@@ -3,35 +3,44 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>QR Pay — Charge a customer</title>
+  <title>QR Pay — Wobbles Cafe</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <main class="shell">
     <header class="hdr">
       <div class="brand">
-        <span class="dot"></span>
-        <span class="brand-name">QR&middot;PAY</span>
+        <span class="brand-mark"></span>
+        <span class="brand-name">Wobbles Cafe</span>
       </div>
-      <a class="settings-link" href="#settings" id="openSettings">settings</a>
+      <a class="hdr-link subtle" href="#settings" id="openSettings">Settings</a>
     </header>
 
+    <div class="menu">
+      <div class="menu-head">
+        <p class="section-label">Tap to add</p>
+        <span class="brand-tag">Menu</span>
+      </div>
+      <div class="menu-scroll" id="menuScroll"></div>
+    </div>
+
     <section class="panel">
-      <div class="panel-label">// charge</div>
+      <p class="panel-label">New charge</p>
       <form id="chargeForm" autocomplete="off">
         <label class="field">
-          <span class="field-label">amount</span>
+          <span class="field-label">Amount</span>
           <div class="amount-row">
             <span class="currency">$</span>
             <input id="amount" type="text" inputmode="decimal" placeholder="0.00" required />
+            <button type="button" id="clearAmount" class="amount-clear" title="clear">Clear</button>
           </div>
         </label>
 
         <label class="field">
-          <span class="field-label">note <span class="hint">what's it for?</span></span>
+          <span class="field-label">Note <span class="hint">what's it for?</span></span>
           <div class="note-row">
             <input id="note" type="text" placeholder="iced latte" />
             <button type="button" id="micBtn" class="mic" aria-label="speak note" title="speak note">
@@ -41,12 +50,12 @@
           <span class="mic-status" id="micStatus"></span>
         </label>
 
-        <button type="submit" class="btn-primary">generate qr →</button>
+        <button type="submit" class="btn-primary">Generate QR →</button>
       </form>
     </section>
 
     <section class="panel qr-panel hidden" id="qrPanel">
-      <div class="panel-label">// scan to pay</div>
+      <p class="panel-label">Scan to pay</p>
       <div class="qr-amount" id="qrAmount"></div>
       <div class="qr-note" id="qrNote"></div>
       <div class="qr-box">
@@ -56,32 +65,32 @@
         <code id="payUrl"></code>
       </div>
       <div class="actions">
-        <button type="button" id="copyBtn" class="btn-ghost">copy link</button>
-        <button type="button" id="downloadBtn" class="btn-ghost">download qr</button>
-        <a id="openBtn" class="btn-ghost" target="_blank" rel="noopener">open</a>
+        <button type="button" id="copyBtn" class="btn-ghost">Copy link</button>
+        <button type="button" id="downloadBtn" class="btn-ghost">Download</button>
+        <a id="openBtn" class="btn-ghost" target="_blank" rel="noopener">Open</a>
       </div>
     </section>
 
     <section class="panel settings" id="settings">
-      <div class="panel-label">// settings — saved on this device</div>
+      <p class="panel-label">Settings — saved on this device</p>
       <label class="field">
-        <span class="field-label">venmo handle <span class="hint">without the @</span></span>
+        <span class="field-label">Venmo handle <span class="hint">without the @</span></span>
         <input id="venmoHandle" type="text" placeholder="iqram" />
       </label>
       <label class="field">
-        <span class="field-label">jelly username</span>
+        <span class="field-label">Jelly username</span>
         <input id="jellyHandle" type="text" placeholder="iqram" />
       </label>
       <label class="field">
-        <span class="field-label">stripe payment link <span class="hint">paste a stripe.com link; static sites can't create dynamic amounts</span></span>
+        <span class="field-label">Stripe payment link <span class="hint">paste a stripe.com link; static sites can't create dynamic amounts</span></span>
         <input id="stripeLink" type="url" placeholder="https://buy.stripe.com/..." />
       </label>
-      <button type="button" id="saveSettings" class="btn-primary">save</button>
+      <button type="button" id="saveSettings" class="btn-primary">Save</button>
       <div class="save-status" id="saveStatus"></div>
     </section>
 
     <footer class="ftr">
-      <span>QR&middot;PAY // venmo · jelly · stripe</span>
+      Wobbles Cafe · Venmo · Jelly · Stripe
     </footer>
   </main>
 

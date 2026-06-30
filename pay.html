@@ -3,37 +3,53 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Pay</title>
+  <title>Pay — Wobbles Cafe</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body class="pay-body">
   <main class="shell pay-shell">
     <header class="hdr">
       <div class="brand">
-        <span class="dot"></span>
-        <span class="brand-name">QR&middot;PAY</span>
+        <span class="brand-mark"></span>
+        <span class="brand-name">Wobbles Cafe</span>
       </div>
+      <a class="hdr-link" href="index.html">New Order</a>
     </header>
 
     <section class="pay-card">
-      <div class="panel-label">// amount due</div>
-      <div class="pay-amount" id="payAmount">$0.00</div>
+      <p class="panel-label">Amount due</p>
+      <div class="pay-amount" id="payAmount">$0.00<span class="total-suffix" id="payTotalLabel">Subtotal</span></div>
+      <div class="pay-breakdown" id="payBreakdown"></div>
       <div class="pay-note" id="payNote"></div>
       <div class="pay-merchant" id="payMerchant"></div>
 
+      <div class="tip-block">
+        <p class="tip-label">Add a tip</p>
+        <div class="tip-row" id="tipRow">
+          <button type="button" class="tip-btn" data-tip="0">None<span class="tip-sub">0%</span></button>
+          <button type="button" class="tip-btn" data-tip="0.15">15%<span class="tip-sub" id="tip15Sub">$0.00</span></button>
+          <button type="button" class="tip-btn" data-tip="0.20">20%<span class="tip-sub" id="tip20Sub">$0.00</span></button>
+          <button type="button" class="tip-btn" data-tip="custom">Custom<span class="tip-sub">$</span></button>
+        </div>
+        <div class="tip-custom-row" id="tipCustomRow">
+          <span class="currency">$</span>
+          <input id="tipCustom" type="text" inputmode="decimal" placeholder="0.00" />
+        </div>
+      </div>
+
       <div class="pay-methods">
-        <a id="venmoBtn" class="pay-btn venmo" target="_blank" rel="noopener">
+        <a id="venmoBtn" class="pay-btn" target="_blank" rel="noopener">
           <span class="pay-btn-label">Pay with Venmo</span>
           <span class="pay-btn-sub" id="venmoSub">@handle</span>
         </a>
-        <a id="jellyBtn" class="pay-btn jelly" target="_blank" rel="noopener">
+        <a id="jellyBtn" class="pay-btn alt" target="_blank" rel="noopener">
           <span class="pay-btn-label">Pay with Jelly</span>
           <span class="pay-btn-sub" id="jellySub">@handle</span>
         </a>
-        <a id="stripeBtn" class="pay-btn stripe" target="_blank" rel="noopener">
+        <a id="stripeBtn" class="pay-btn alt" target="_blank" rel="noopener">
           <span class="pay-btn-label">Card / Apple Pay</span>
           <span class="pay-btn-sub">via Stripe</span>
         </a>
