@@ -136,7 +136,37 @@ function buildPayUrl(amount, note) {
 
 let lastQrDataUrl = null;
 
-form.addEventListener('submit', async (e) => {
+// Paint a qrcode-generator QR onto a canvas at a given pixel size.
+function renderQrToCanvas(canvas, text, size) {
+  // typeNumber 0 = auto-pick smallest version; 'M' error correction.
+  const qr = qrcode(0, 'M');
+  qr.addData(text);
+  qr.make();
+  const modules = qr.getModuleCount();
+  const margin = 2; // quiet zone in modules
+  const total = modules + margin * 2;
+  const scale = Math.max(1, Math.floor(size / total));
+  const pixel = total * scale;
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = pixel * dpr;
+  canvas.height = pixel * dpr;
+  canvas.style.width = pixel + 'px';
+  canvas.style.height = pixel + 'px';
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0, 0, pixel, pixel);
+  ctx.fillStyle = '#0b0f0c';
+  for (let r = 0; r < modules; r++) {
+    for (let c = 0; c < modules; c++) {
+      if (qr.isDark(r, c)) {
+        ctx.fillRect((c + margin) * scale, (r + margin) * scale, scale, scale);
+      }
+    }
+  }
+}
+
+form.addEventListener('submit', (e) => {
   e.preventDefault();
   if (listening) stopListening();
 
@@ -155,16 +185,11 @@ form.addEventListener('submit', async (e) => {
   payUrlEl.textContent = url;
   openBtn.href = url;
 
-  // Render QR to canvas
+  // Render QR to canvas using qrcode-generator
   qrCanvas.innerHTML = '';
   const canvas = document.createElement('canvas');
   qrCanvas.appendChild(canvas);
-  await QRCode.toCanvas(canvas, url, {
-    width: 320,
-    margin: 1,
-    color: { dark: '#0b0f0c', light: '#ffffff' },
-    errorCorrectionLevel: 'M',
-  });
+  renderQrToCanvas(canvas, url, 320);
   lastQrDataUrl = canvas.toDataURL('image/png');
 
   qrPanel.classList.remove('hidden');
