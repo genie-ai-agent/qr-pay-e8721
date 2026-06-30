@@ -18,8 +18,9 @@ document.getElementById('payAmount').textContent = '$' + amtStr;
 const noteEl = document.getElementById('payNote');
 if (note) noteEl.textContent = '“' + note + '”';
 
+const DEFAULT_VENMO = 'iqram';
 const settings = loadSettings();
-const venmo = (settings.venmo || '').replace(/^@/, '');
+const venmo = (settings.venmo || DEFAULT_VENMO).replace(/^@/, '');
 const jelly = (settings.jelly || '').replace(/^@/, '');
 const stripe = settings.stripe || '';
 

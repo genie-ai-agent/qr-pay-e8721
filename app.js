@@ -17,8 +17,9 @@ const jellyInput = document.getElementById('jellyHandle');
 const stripeInput = document.getElementById('stripeLink');
 const saveStatus = document.getElementById('saveStatus');
 
+const DEFAULT_VENMO = 'iqram';
 const s = loadSettings();
-venmoInput.value = s.venmo || '';
+venmoInput.value = s.venmo || DEFAULT_VENMO;
 jellyInput.value = s.jelly || '';
 stripeInput.value = s.stripe || '';
 
