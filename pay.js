@@ -39,8 +39,9 @@ const tip20Sub = document.getElementById('tip20Sub');
 
 const venmoBtn  = document.getElementById('venmoBtn');
 const venmoSub  = document.getElementById('venmoSub');
-const jellyBtn  = document.getElementById('jellyBtn');
-const jellySub  = document.getElementById('jellySub');
+const jellyBtn   = document.getElementById('jellyBtn');
+const jellySub   = document.getElementById('jellySub');
+const jellyPrice = document.getElementById('jellyPrice');
 const stripeBtn = document.getElementById('stripeBtn');
 
 // Precompute tip preview labels (always shown against subtotal)
@@ -97,10 +98,15 @@ function render() {
     venmoSub.textContent = 'set handle in merchant settings';
   }
 
+  // Jelly: 50% off the subtotal, tip stays on the full subtotal
+  const jellyTotal = (subtotal * 0.5) + tip;
+  const jellyStr = jellyTotal.toFixed(2);
+  jellyPrice.innerHTML = `<s>$${total.toFixed(2)}</s> <b>$${jellyStr}</b>`;
+
   if (jelly) {
     const jurl = new URL('https://jellyjelly.com/' + encodeURIComponent(jelly));
     jurl.searchParams.set('action', 'pay');
-    jurl.searchParams.set('amount', amtStr);
+    jurl.searchParams.set('amount', jellyStr);
     if (note) jurl.searchParams.set('note', note);
     jellyBtn.href = jurl.toString();
     jellySub.textContent = '@' + jelly;

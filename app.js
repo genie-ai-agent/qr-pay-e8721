@@ -59,10 +59,37 @@ amountInput.addEventListener('input', (e) => {
 
 document.getElementById('clearAmount').addEventListener('click', () => {
   amountInput.value = '';
-  // Strip out menu items from the note (keep any free-text up to the first item)
+  // Reset order tally + free-text note
+  orderCounts = {};
+  orderSequence = [];
+  freeText = '';
   noteInput.value = '';
   amountInput.focus();
 });
+
+// Track quantities of tapped menu items + any free text the user typed/spoke
+let orderCounts = {};       // { 'Black Coffee': 2, ... }
+let orderSequence = [];     // ['Black Coffee', 'Iced Coffee'] in first-tap order
+let freeText = '';          // anything the user typed before tapping items
+
+function pluralize(name, count) {
+  if (count <= 1) return name;
+  // Simple pluralization for our menu ("Black Coffee" -> "Black Coffees")
+  if (/y$/i.test(name)) return name.replace(/y$/i, 'ies');
+  if (/(s|x|z|ch|sh)$/i.test(name)) return name + 'es';
+  return name + 's';
+}
+
+function buildOrderNote() {
+  const parts = orderSequence.map(n => {
+    const c = orderCounts[n] || 0;
+    if (c <= 0) return null;
+    return `${c} ${pluralize(n, c)}`;
+  }).filter(Boolean);
+  const order = parts.join(', ');
+  if (freeText && order) return `${freeText} - ${order}`;
+  return freeText || order;
+}
 
 // Build the horizontal menu scroller
 const menuScroll = document.getElementById('menuScroll');
@@ -81,10 +108,29 @@ function addMenuItem(item) {
   const current = parseFloat(amountInput.value) || 0;
   const next = +(current + item.price).toFixed(2);
   amountInput.value = next.toFixed(2);
-  // Append item name to the note (comma separated), keep order
-  const existing = noteInput.value.trim();
-  noteInput.value = existing ? `${existing}, ${item.name}` : item.name;
+
+  // Capture any free-text the user typed *before* this tap (only on the first tap)
+  if (orderSequence.length === 0) {
+    const typed = noteInput.value.trim();
+    // If what's in the box is *already* an auto-built order note from a prior round, ignore it.
+    if (typed && typed !== buildOrderNote()) freeText = typed;
+  }
+
+  if (!(item.name in orderCounts)) orderSequence.push(item.name);
+  orderCounts[item.name] = (orderCounts[item.name] || 0) + 1;
+
+  noteInput.value = buildOrderNote();
 }
+
+// If the user edits the note manually, treat the whole field as free text and reset the tally.
+noteInput.addEventListener('input', () => {
+  const auto = buildOrderNote();
+  if (noteInput.value !== auto) {
+    freeText = noteInput.value;
+    orderCounts = {};
+    orderSequence = [];
+  }
+});
 
 // Voice note via Web Speech API
 const micBtn = document.getElementById('micBtn');
