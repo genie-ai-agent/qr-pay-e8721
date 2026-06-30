@@ -506,6 +506,62 @@ input:focus { box-shadow: inset 0 0 0 1px var(--ink); }
 .pay-btn:active { transform: translateY(1px); }
 .pay-btn[aria-disabled="true"] { opacity: 0.35; pointer-events: none; }
 
+.pay-btn-main {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  min-width: 0;
+}
+.pay-prefix {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.65;
+  font-weight: 500;
+}
+
+/* Venmo: blue with the white wordmark */
+.venmo-btn {
+  background: #008cff;
+  border-color: #008cff;
+  color: #ffffff;
+}
+.venmo-btn:hover {
+  background: #0070d4;
+  border-color: #0070d4;
+}
+.venmo-btn .pay-btn-sub { opacity: 0.85; }
+.venmo-logo {
+  height: 22px;
+  width: auto;
+  display: block;
+}
+
+/* Jelly: keep B&W card, show the jelly logo + jellyjelly wordmark */
+.jelly-mark {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.jelly-logo {
+  height: 22px;
+  width: 22px;
+  display: block;
+  filter: grayscale(1) brightness(0);
+}
+.jelly-word {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  text-transform: none;
+}
+.jelly-btn:hover .jelly-logo { filter: grayscale(1) brightness(0) invert(1); }
+.jelly-btn:hover .jelly-word { color: var(--paper); }
+
 .jelly-btn { position: relative; padding-right: 18px; }
 .jelly-banner {
   position: absolute;
@@ -534,9 +590,10 @@ input:focus { box-shadow: inset 0 0 0 1px var(--ink); }
   font-size: 12px;
   letter-spacing: 0.04em;
   font-weight: 500;
-  margin-top: 4px;
+  margin-top: 6px;
   text-transform: none;
   opacity: 0.85;
+  color: inherit;
 }
 .jelly-price s { opacity: 0.45; margin-right: 6px; }
 .jelly-price b { font-weight: 700; }

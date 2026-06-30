@@ -26,9 +26,10 @@ const stripeInput = document.getElementById('stripeLink');
 const saveStatus  = document.getElementById('saveStatus');
 
 const DEFAULT_VENMO = 'iqram';
+const DEFAULT_JELLY = 'acafe';
 const s = loadSettings();
 venmoInput.value  = s.venmo  || DEFAULT_VENMO;
-jellyInput.value  = s.jelly  || '';
+jellyInput.value  = s.jelly  || DEFAULT_JELLY;
 stripeInput.value = s.stripe || '';
 
 document.getElementById('saveSettings').addEventListener('click', () => {

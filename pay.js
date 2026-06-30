@@ -16,9 +16,10 @@ let tipKind = '0';   // '0' | '0.15' | '0.20' | 'custom'
 let tipCustom = 0;   // dollars
 
 const DEFAULT_VENMO = 'iqram';
+const DEFAULT_JELLY = 'acafe';
 const settings = loadSettings();
 const venmo  = (settings.venmo  || DEFAULT_VENMO).replace(/^@/, '');
-const jelly  = (settings.jelly  || '').replace(/^@/, '');
+const jelly  = (settings.jelly  || DEFAULT_JELLY).replace(/^@/, '');
 const stripe = settings.stripe  || '';
 
 // Static UI
