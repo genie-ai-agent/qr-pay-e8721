@@ -86,13 +86,18 @@ function render() {
   const amtStr = total.toFixed(2);
 
   if (venmo) {
-    const vurl = new URL('https://venmo.com/' + encodeURIComponent(venmo));
+    // Canonical Venmo payment-link format. Using account.venmo.com directly
+    // avoids the venmo.com/<handle> redirect chain and ensures the link
+    // unambiguously points at Venmo (no path collision with anything else).
+    const vurl = new URL('https://account.venmo.com/payment-link');
     vurl.searchParams.set('txn', 'pay');
+    vurl.searchParams.set('recipients', venmo);
     vurl.searchParams.set('amount', amtStr);
     if (note) vurl.searchParams.set('note', note);
     venmoBtn.href = vurl.toString();
     venmoSub.textContent = '@' + venmo;
   } else {
+    venmoBtn.removeAttribute('href');
     venmoBtn.setAttribute('aria-disabled', 'true');
     venmoSub.textContent = 'set handle in merchant settings';
   }
