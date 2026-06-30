@@ -20,7 +20,6 @@ const DEFAULT_JELLY = 'acafe';
 const settings = loadSettings();
 const venmo  = (settings.venmo  || DEFAULT_VENMO).replace(/^@/, '');
 const jelly  = (settings.jelly  || DEFAULT_JELLY).replace(/^@/, '');
-const stripe = settings.stripe  || '';
 
 // Static UI
 const noteEl = document.getElementById('payNote');
@@ -43,7 +42,6 @@ const venmoSub  = document.getElementById('venmoSub');
 const jellyBtn   = document.getElementById('jellyBtn');
 const jellySub   = document.getElementById('jellySub');
 const jellyPrice = document.getElementById('jellyPrice');
-const stripeBtn = document.getElementById('stripeBtn');
 
 // Precompute tip preview labels (always shown against subtotal)
 tip15Sub.textContent = '$' + (subtotal * 0.15).toFixed(2);
@@ -116,18 +114,6 @@ function render() {
     jellySub.textContent = 'set username in merchant settings';
   }
 
-  if (stripe) {
-    try {
-      const surl = new URL(stripe);
-      if (note) surl.searchParams.set('client_reference_id', note.slice(0, 200));
-      stripeBtn.href = surl.toString();
-    } catch {
-      stripeBtn.href = stripe;
-    }
-  } else {
-    stripeBtn.setAttribute('aria-disabled', 'true');
-    stripeBtn.querySelector('.pay-btn-sub').textContent = 'paste a stripe link in settings';
-  }
 }
 
 // Tip handlers

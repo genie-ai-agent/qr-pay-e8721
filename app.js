@@ -22,7 +22,6 @@ function saveSettings(s) {
 // Populate settings inputs
 const venmoInput  = document.getElementById('venmoHandle');
 const jellyInput  = document.getElementById('jellyHandle');
-const stripeInput = document.getElementById('stripeLink');
 const saveStatus  = document.getElementById('saveStatus');
 
 const DEFAULT_VENMO = 'iqram';
@@ -30,13 +29,11 @@ const DEFAULT_JELLY = 'acafe';
 const s = loadSettings();
 venmoInput.value  = s.venmo  || DEFAULT_VENMO;
 jellyInput.value  = s.jelly  || DEFAULT_JELLY;
-stripeInput.value = s.stripe || '';
 
 document.getElementById('saveSettings').addEventListener('click', () => {
   saveSettings({
     venmo:  venmoInput.value.trim().replace(/^@/, ''),
     jelly:  jellyInput.value.trim().replace(/^@/, ''),
-    stripe: stripeInput.value.trim(),
   });
   saveStatus.textContent = 'Saved ✓';
   setTimeout(() => saveStatus.textContent = '', 1800);
