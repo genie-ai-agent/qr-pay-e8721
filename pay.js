@@ -86,12 +86,13 @@ function render() {
   const amtStr = total.toFixed(2);
 
   if (venmo) {
-    // Canonical Venmo payment-link format. Using account.venmo.com directly
-    // avoids the venmo.com/<handle> redirect chain and ensures the link
-    // unambiguously points at Venmo (no path collision with anything else).
-    const vurl = new URL('https://account.venmo.com/payment-link');
+    // Venmo universal link: https://venmo.com/<handle>?txn=pay&amount=&note=
+    // On iOS/Android with the Venmo app installed, this opens directly into
+    // the app with the payment prefilled. On desktop / no-app, it falls back
+    // to the Venmo web profile. This is the format Venmo itself documents
+    // for share-to-pay links.
+    const vurl = new URL('https://venmo.com/' + encodeURIComponent(venmo));
     vurl.searchParams.set('txn', 'pay');
-    vurl.searchParams.set('recipients', venmo);
     vurl.searchParams.set('amount', amtStr);
     if (note) vurl.searchParams.set('note', note);
     venmoBtn.href = vurl.toString();
